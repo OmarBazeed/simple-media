@@ -4,7 +4,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 const SearchBar = () => {
   return (
     <>
-      <div className="flex">
+      <section className="flex relative my-4">
         <Input placeholder="Search" />
         <IconButton
           colorScheme="blue"
@@ -13,7 +13,7 @@ const SearchBar = () => {
           style={{ position: "absolute" }}
           className="right-0"
         />
-      </div>
+      </section>
     </>
   );
 };

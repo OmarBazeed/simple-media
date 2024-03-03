@@ -1,5 +1,122 @@
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Stack,
+  Text,
+  Image,
+  ButtonGroup,
+  Divider,
+  Button,
+  Heading,
+} from "@chakra-ui/react";
 const Posts = () => {
-  return <div>Posts</div>;
+  return (
+    <div className="my-4 flex flex-wrap items-center justify-between ">
+      <Card
+        maxW="sm"
+        className="shadow-2xl m-auto shadow-blue-500/50 hover:shadow-slate-950  hover:shadow-md hover:-translate-x-1 hover:-translate-y-1 hover:bg-slate-700 hover:text-red-100 transition-all duration-500"
+      >
+        <CardBody>
+          <Image
+            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            alt="Green double couch with wooden legs"
+            borderRadius="lg"
+          />
+          <Stack mt="6" spacing="3">
+            <Heading size="md">Living room Sofa</Heading>
+            <Text>
+              This sofa is perfect for modern tropical spaces, baroque inspired
+              spaces, earthy toned spaces and for people who love a chic design
+              with a sprinkle of vintage design.
+            </Text>
+            <Text color="blue.600" fontSize="2xl">
+              $450
+            </Text>
+          </Stack>
+        </CardBody>
+        <Divider />
+        <CardFooter>
+          <ButtonGroup spacing="2">
+            <Button variant="solid" colorScheme="blue">
+              Buy now
+            </Button>
+            <Button variant="ghost" colorScheme="blue">
+              Add to cart
+            </Button>
+          </ButtonGroup>
+        </CardFooter>
+      </Card>
+      <Card
+        maxW="sm"
+        className="shadow-2xl m-auto shadow-blue-500/50 hover:shadow-slate-950  hover:shadow-md hover:-translate-x-1 hover:-translate-y-1 hover:bg-slate-700 hover:text-red-100 transition-all duration-500"
+      >
+        <CardBody>
+          <Image
+            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            alt="Green double couch with wooden legs"
+            borderRadius="lg"
+          />
+          <Stack mt="6" spacing="3">
+            <Heading size="md">Living room Sofa</Heading>
+            <Text>
+              This sofa is perfect for modern tropical spaces, baroque inspired
+              spaces, earthy toned spaces and for people who love a chic design
+              with a sprinkle of vintage design.
+            </Text>
+            <Text color="blue.600" fontSize="2xl">
+              $450
+            </Text>
+          </Stack>
+        </CardBody>
+        <Divider />
+        <CardFooter>
+          <ButtonGroup spacing="2">
+            <Button variant="solid" colorScheme="blue">
+              Buy now
+            </Button>
+            <Button variant="ghost" colorScheme="blue">
+              Add to cart
+            </Button>
+          </ButtonGroup>
+        </CardFooter>
+      </Card>
+      <Card
+        maxW="sm"
+        className="shadow-2xl m-auto shadow-blue-500/50 hover:shadow-slate-950  hover:shadow-md hover:-translate-x-1 hover:-translate-y-1 hover:bg-slate-700 hover:text-red-100 transition-all duration-500"
+      >
+        <CardBody>
+          <Image
+            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            alt="Green double couch with wooden legs"
+            borderRadius="lg"
+          />
+          <Stack mt="6" spacing="3">
+            <Heading size="md">Living room Sofa</Heading>
+            <Text>
+              This sofa is perfect for modern tropical spaces, baroque inspired
+              spaces, earthy toned spaces and for people who love a chic design
+              with a sprinkle of vintage design.
+            </Text>
+            <Text color="blue.600" fontSize="2xl">
+              $450
+            </Text>
+          </Stack>
+        </CardBody>
+        <Divider />
+        <CardFooter>
+          <ButtonGroup spacing="2">
+            <Button variant="solid" colorScheme="blue">
+              Buy now
+            </Button>
+            <Button variant="ghost" colorScheme="blue">
+              Add to cart
+            </Button>
+          </ButtonGroup>
+        </CardFooter>
+      </Card>
+    </div>
+  );
 };
 
 export default Posts;

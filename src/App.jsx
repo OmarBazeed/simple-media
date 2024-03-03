@@ -8,7 +8,7 @@ import Login from "./components/Login";
 const App = () => {
   return (
     <>
-      <div className="container m-auto">
+      <div className="container m-auto h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
