@@ -7,3 +7,10 @@ export const SuggestItems = [
   { name: "comeic", color: "twitter", icon: <Icon as={InfoIcon} /> },
   { name: "economy", color: "facebook", icon: <Icon as={SunIcon} /> },
 ];
+
+export const NavbarLinks = [
+  { name: "Home", path: "/" },
+  { name: "Posts", path: "/posts" },
+];
+
+export const mainApiURL = "https://posts-api.preview-ym.com/api/";

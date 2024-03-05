@@ -10,47 +10,41 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useToast, Box } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
+import { mainApiURL } from "../utils";
+import { useState } from "react";
 
 const Login = () => {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
   const toast = useToast();
   const navigate = useNavigate();
   const handleHomeBtn = () => {
     navigate("/");
   };
 
-  const UserName = useRef();
-  const Password = useRef();
-
-  const handleSubmit = (username, password) => {
-    axios
-      .post("https://posts-api.preview-ym.com/api/auth/login", {
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post(`${mainApiURL}auth/login`, {
         email: username,
         password: password,
-      })
-      .then((res) => {
-        const { user } = res.data;
-        const { access_token } = res.data;
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("token", JSON.stringify(access_token));
-        {
-          res &&
-            toast({
-              position: "bottom-left",
-              render: () => (
-                <Box color="white" p={3} bg="blue.500">
-                  You Logged in Successfully
-                </Box>
-              ),
-            });
-        }
-        console.log("first");
-        navigate("/");
-      })
-      .catch((err) => console.log(err));
+      });
+      console.log(res);
+      localStorage.setItem("user", JSON.stringify(res.data?.user));
+      localStorage.setItem("token", res.data?.access_token);
+      toast({
+        title: "Login Successfully ",
+        description: "logged in",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="h-screen duration-300 ">
@@ -66,23 +60,20 @@ const Login = () => {
               className="my-1"
               variant="flushed"
               placeholder="Enter Your UserName"
-              ref={UserName}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <Input
               type="password"
               className="my-1"
               variant="flushed"
               placeholder="Enter Your Passscode"
-              ref={Password}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </CardBody>
           <CardFooter className="flex flex-col">
-            <Button
-              colorScheme="blue"
-              onClick={() =>
-                handleSubmit(UserName.current.value, Password.current.value)
-              }
-            >
+            <Button colorScheme="blue" onClick={() => handleSubmit()}>
               Go
             </Button>
             <Link to="https://chakra-ui.com" isExternal className="my-3">
