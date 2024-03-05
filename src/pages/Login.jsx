@@ -47,6 +47,8 @@ const Login = () => {
               ),
             });
         }
+        console.log("first");
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
