@@ -13,8 +13,10 @@ import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useToast, Box } from "@chakra-ui/react";
 
 const Login = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const handleHomeBtn = () => {
     navigate("/");
@@ -34,6 +36,17 @@ const Login = () => {
         const { access_token } = res.data;
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", JSON.stringify(access_token));
+        {
+          res &&
+            toast({
+              position: "bottom-left",
+              render: () => (
+                <Box color="white" p={3} bg="blue.500">
+                  You Logged in Successfully
+                </Box>
+              ),
+            });
+        }
       })
       .catch((err) => console.log(err));
   };
