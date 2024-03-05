@@ -1,4 +1,5 @@
+import Home from "./Home.jsx";
+import Login from "./Login.jsx";
+import Posts from "./Posts.jsx";
 
-import Home from "./Home";
-
-export { Home }
+export { Home, Login, Posts };

@@ -15,6 +15,13 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="mx-1 inline-block">
+            <Link to="/posts" className="">
+              <Button colorScheme="cyan" variant="ghost">
+                Posts
+              </Button>
+            </Link>
+          </li>
+          <li className="mx-1 inline-block">
             <Link to="/login" className="">
               <Button colorScheme="messenger" variant="ghost">
                 Login

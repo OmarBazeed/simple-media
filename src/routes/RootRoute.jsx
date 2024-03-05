@@ -1,14 +1,17 @@
-import { Home } from "../pages";
-import { RootLayout } from "../components";
+import { Home, Posts } from "../pages/index.js";
+import RootLayout from "../components/RootLayout.jsx";
 
 export const RootRoute = {
-    path: "/",
-    element: <RootLayout />,
-    errorElement: null,
-    children: [
-        {
-            index: true,
-            element: <Home />,
-        },
-    ],
+  path: "/",
+  element: <RootLayout />,
+  children: [
+    {
+      index: true,
+      element: <Home />,
+    },
+    {
+      index: "posts",
+      element: <Posts />,
+    },
+  ],
 };

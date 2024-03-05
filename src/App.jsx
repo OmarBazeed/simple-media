@@ -1,19 +1,15 @@
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// import { RootRoute } from "./routes/RootRoute";
-// const router = createBrowserRouter([RootRoute]);
-import { Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
-import Login from "./components/Login";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { RootRoute } from "./routes/RootRoute.jsx";
+import { PostsRoute } from "./routes/PostsRoute.jsx";
+
+import { LoginRoute } from "./routes/LoginRoute";
+
+const router = createBrowserRouter([RootRoute, LoginRoute, PostsRoute]);
 
 const App = () => {
   return (
     <>
-      <div className="container m-auto h-screen">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </div>
+      <RouterProvider router={router} />
     </>
   );
 };

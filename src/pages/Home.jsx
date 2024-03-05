@@ -1,5 +1,15 @@
+import Posts from "./Posts";
+import SearchBar from "../components/SearchBar";
+import SuggestedItems from "../components/SuggestedItems";
+
 const Home = () => {
-    return <div>Home</div>;
+  return (
+    <>
+      <SearchBar />
+      <SuggestedItems />
+      <Posts />
+    </>
+  );
 };
 
 export default Home;

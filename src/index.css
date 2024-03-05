@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.loginModule {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bckHome {
+  position: absolute !important;
+  top: 15px;
+  left: 10px;
+  animation: coloring 1s infinite ease-in-out alternate;
+  border-radius: 20% !important;
+}
+.bckHome span {
+  font-size: 20px !important;
+  padding: 0 !important;
+}
+@keyframes coloring {
+  0% {
+    transform: translateY(-3px);
+    background-color: rgb(186, 106, 1);
+    color: white;
+    filter: drop-shadow(2px 2px 2px gray);
+  }
+  100% {
+    transform: translateY(-5px);
+    background-color: rgb(186, 106, 1);
+    filter: drop-shadow(2px 2px 4px gray);
+  }
+}
