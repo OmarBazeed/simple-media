@@ -5,9 +5,9 @@ const SearchBar = () => {
   return (
     <>
       <section className="flex relative my-4">
-        <Input placeholder="Search" />
+        <Input placeholder="Search" className="text-white" />
         <IconButton
-          colorScheme="blue"
+          colorScheme=""
           aria-label="Search database"
           icon={<SearchIcon />}
           style={{ position: "absolute" }}

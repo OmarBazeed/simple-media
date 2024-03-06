@@ -11,15 +11,16 @@ import {
 import { Link } from "react-router-dom";
 import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
+import Swal from "sweetalert2";
 import { mainApiURL } from "../utils";
-import { useState } from "react";
 
 const Login = () => {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
   const toast = useToast();
+  const [userName, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handleHomeBtn = () => {
     navigate("/");
@@ -28,22 +29,30 @@ const Login = () => {
   const handleSubmit = async () => {
     try {
       const res = await axios.post(`${mainApiURL}auth/login`, {
-        email: username,
+        email: userName,
         password: password,
       });
-      console.log(res);
-      localStorage.setItem("user", JSON.stringify(res.data?.user));
-      localStorage.setItem("token", res.data?.access_token);
+
+      const user = res.data.user;
+      const token = res.data.access_token.slice(1, -1);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+
       toast({
-        title: "Login Successfully ",
-        description: "logged in",
+        title: "Account Signed In",
+        description: "You Have been signed in",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
+
       navigate("/");
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+      });
     }
   };
   return (
@@ -59,22 +68,22 @@ const Login = () => {
             <Input
               className="my-1"
               variant="flushed"
-              placeholder="Enter Your UserName"
-              value={username}
+              placeholder="Enter Your Email"
               onChange={(e) => setUsername(e.target.value)}
+              value={userName}
             />
             <Input
               type="password"
               className="my-1"
               variant="flushed"
-              placeholder="Enter Your Passscode"
-              value={password}
+              placeholder="Enter Your Password"
               onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
           </CardBody>
           <CardFooter className="flex flex-col">
             <Button colorScheme="blue" onClick={() => handleSubmit()}>
-              Go
+              Login
             </Button>
             <Link to="https://chakra-ui.com" isExternal className="my-3">
               <Text>
