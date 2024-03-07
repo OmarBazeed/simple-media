@@ -1,56 +1,117 @@
-import { Button, Image } from "@chakra-ui/react";
+import { Button, Image, Spinner } from "@chakra-ui/react";
 import Logo from "../../assets/logo.png";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AvatarBadge, Avatar } from "@chakra-ui/react";
+import {
+  AvatarBadge,
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuGroup,
+  MenuDivider,
+  useToast,
+} from "@chakra-ui/react";
 import { SearchBar } from "../";
 import { mainApiURL } from "../../utils";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  // const toast = useToast();
+  const toast = useToast();
   const user = JSON.parse(localStorage.getItem("user"));
+  const [isClicked, setIsClicked] = useState(false);
 
   const handleLogout = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token.length);
     try {
-      const res = await axios.post(
+      await axios.post(
         `${mainApiURL}auth/logout`,
         {},
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log("first");
-      console.log(res);
-      localStorage.clear();
+
+      toast({
+        title: "Account Signed In",
+        description: "You Have signed out",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      setIsClicked(true);
+      setTimeout(() => {
+        localStorage.clear();
+        sessionStorage.clear();
+        navigate("/");
+      }, 500);
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+      });
     }
   };
   return (
     <React.Fragment>
-      <nav className="flex items-center justify-between h-[64px] bg-slate-600 w-full ">
+      <nav className="flex items-center justify-between h-[64px] bg-slate-600 w-full px-5 ">
         <div className=" w-full px-3 flex items-center justify-between">
-          <div className="flex gap-2">
-            <Image src={Logo} alt="..." className="size-8" />
+          <div className="flex gap-2 items-center">
+            <Image src={Logo} alt="..." className="size-11" />
             <h1 className="text-3xl font-bold text-white">Simple Media</h1>
           </div>
           <SearchBar />
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center justify-between">
             {user ? (
-              <React.Fragment>
-                <Avatar name="omar bazeed">
-                  <AvatarBadge boxSize="1.25em" bg="green.500" />
-                </Avatar>
+              <>
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    colorScheme=""
+                    className="rounded-2xl"
+                  >
+                    <Avatar
+                      name={user?.name}
+                      style={{ backgroundColor: "#C95D1C", color: "white" }}
+                      className="h-full w-full hover:bg-slate-900"
+                    >
+                      <AvatarBadge boxSize=".85em" bg="green.500" />
+                    </Avatar>
+                  </MenuButton>
+                  <MenuList>
+                    <MenuGroup title="Profile">
+                      <MenuItem>My Account</MenuItem>
+                    </MenuGroup>
+                    <MenuDivider />
+                    <MenuGroup title="Help">
+                      <MenuItem>Contact</MenuItem>
+                    </MenuGroup>
+                  </MenuList>
+                </Menu>
+
                 <Button colorScheme="orange" onClick={() => handleLogout()}>
-                  Logout
+                  {isClicked ? (
+                    <Spinner
+                      thickness="1px"
+                      speed="0.5s"
+                      emptyColor="gray.200"
+                      color="blue.500"
+                      size="md"
+                    />
+                  ) : (
+                    "Logout"
+                  )}
                 </Button>
-              </React.Fragment>
+              </>
             ) : (
-              <React.Fragment>
+              <>
                 <Button colorScheme="orange" onClick={() => navigate("/auth")}>
                   Login
                 </Button>
@@ -61,7 +122,7 @@ const Navbar = () => {
                 >
                   Register
                 </Button>
-              </React.Fragment>
+              </>
             )}
           </div>
         </div>

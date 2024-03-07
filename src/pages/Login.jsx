@@ -9,11 +9,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { useToast } from "@chakra-ui/react";
+import {
+  useToast,
+  InputGroup,
+  InputRightElement,
+  Spinner,
+} from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { mainApiURL } from "../utils";
 
@@ -22,21 +26,22 @@ const Login = () => {
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const handleHomeBtn = () => {
-    navigate("/");
-  };
+  const [isClicked, setIsClicked] = useState(false);
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post(`${mainApiURL}auth/login`, {
-        email: userName,
-        password: password,
-      });
-
-      const user = res.data.user;
-      const token = res.data.access_token.slice(1, -1);
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
+      await axios
+        .post(`${mainApiURL}auth/login`, {
+          email: userName,
+          password: password,
+        })
+        .then((res) => {
+          const user = res.data.user;
+          const token = res.data.access_token;
+          console.log(token.length);
+          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("token", token);
+        });
 
       toast({
         title: "Account Signed In",
@@ -45,8 +50,10 @@ const Login = () => {
         duration: 9000,
         isClosable: true,
       });
-
-      navigate("/");
+      setIsClicked(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -55,14 +62,40 @@ const Login = () => {
       });
     }
   };
+
+  const PasswordInput = () => {
+    const [show, setShow] = useState(false);
+    const handleClick = () => setShow(!show);
+
+    return (
+      <InputGroup size="lg">
+        <Input
+          pr="4.5rem"
+          type={show ? "text" : "password"}
+          placeholder="Enter password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          className="my-1"
+          variant="flushed"
+        />
+        <InputRightElement width="4.5rem">
+          <Button h="1.75rem" size="sm" onClick={handleClick}>
+            {show ? "Hide" : "Show"}
+          </Button>
+        </InputRightElement>
+      </InputGroup>
+    );
+  };
   return (
     <div className="h-screen duration-300 ">
       <section
         className={`shadow-lg m-auto hover:text-red-100 transition-all duration-500 loginModule`}
       >
-        <Card align="center">
+        <Card align="center" className="w-[420px] h-[370px]">
           <CardHeader>
-            <Heading size="md"> Login </Heading>
+            <Heading size="lg" className="loginHead">
+              Login
+            </Heading>
           </CardHeader>
           <CardBody>
             <Input
@@ -72,34 +105,40 @@ const Login = () => {
               onChange={(e) => setUsername(e.target.value)}
               value={userName}
             />
-            <Input
-              type="password"
-              className="my-1"
-              variant="flushed"
-              placeholder="Enter Your Password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
+            {PasswordInput()}
           </CardBody>
           <CardFooter className="flex flex-col">
             <Button colorScheme="blue" onClick={() => handleSubmit()}>
-              Login
+              {isClicked ? (
+                <Spinner
+                  thickness="1px"
+                  speed="0.5s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="md"
+                />
+              ) : (
+                "Login"
+              )}
             </Button>
-            <Link to="https://chakra-ui.com" isExternal className="my-3">
-              <Text>
-                forget your password ? <ExternalLinkIcon mx="2px" />
-              </Text>
-            </Link>
+            <div className="flex gap-2 items-center mt-4">
+              <Link to="https://chakra-ui.com" isExternal className="">
+                <Text>forget your password ?</Text>
+              </Link>
+              <p className="">OR </p>
+              <Button
+                colorScheme="orange"
+                variant="link"
+                onClick={() => navigate("/auth/register")}
+                className=""
+                size="md"
+              >
+                Register
+              </Button>
+            </div>
           </CardFooter>
         </Card>
       </section>
-      <Button
-        rightIcon={<ArrowForwardIcon />}
-        colorScheme="teal"
-        variant="outline"
-        className="bckHome p-0 rounded-lg"
-        onClick={handleHomeBtn}
-      ></Button>
     </div>
   );
 };

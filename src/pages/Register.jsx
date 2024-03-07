@@ -1,125 +1,134 @@
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Button,
-    Heading,
-    Input,
-    Text,
-  } from "@chakra-ui/react";
-  import { Link } from "react-router-dom";
-  import { ExternalLinkIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-  import { useRef } from "react";
-  import { useNavigate } from "react-router-dom";
-  import axios from "axios";
-  
-  const Register = () => {
-    const navigate = useNavigate();
-    const handleHomeBtn = () => {
-      navigate("/");
-    };
-  
-    const name = useRef();
-    const email = useRef();
-    const password = useRef();
-    const confirmPassword = useRef();
-  
-    const handleSubmit = ({name,email, password , confirmPassword}) => {
-      axios
-        .post("https://posts-api.preview-ym.com/api/auth/register", {
-        name:name,
-          email: email,
-          password: password,
-          password_confirmation:confirmPassword
-        })
-        .then((res) => {
-            console.log(res);
-            navigate("/auth")
-        //   const { user } = res.data;
-        //   const { access_token } = res.data;
-        //   localStorage.setItem("user", JSON.stringify(user));
-        //   localStorage.setItem("token", JSON.stringify(access_token));
-        //   {
-        //     res &&
-        //       toast({
-        //         position: "bottom-left",
-        //         render: () => (
-        //           <Box color="white" p={3} bg="blue.500">
-        //             You Logged in Successfully
-        //           </Box>
-        //         ),
-        //       });
-        //   }
-        //   console.log("first");
-        })
-        .catch((err) => alert(err.response.data.message));
-    };
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Button,
+  Heading,
+  Input,
+  useToast,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
+
+import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import Confetti from "react-confetti";
+
+const Register = () => {
+  // const navigate = useNavigate();
+  const toast = useToast();
+
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setconfirmPassword] = useState();
+
+  const handleSubmit = (name, email, password, confirmPassword) => {
+    axios
+      .post("https://posts-api.preview-ym.com/api/auth/register", {
+        name: name,
+        email: email,
+        password: password,
+        password_confirmation: confirmPassword,
+      })
+      .then((res) => {
+        toast({
+          title: "Account Signed In",
+          description: res.data.message,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        <Confetti
+          width={window.innerWidth || 300}
+          height={window.innerHeight || 200}
+        />;
+        // navigate("/auth");
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
+      });
+  };
+
+  const PasswordInput = (pas, set, place) => {
+    const [show, setShow] = useState(false);
+    const handleClick = () => setShow(!show);
+
     return (
-      <div className="h-screen duration-300 ">
-        <section
-          className={`shadow-lg m-auto hover:text-red-100 transition-all duration-500 loginModule`}
-        >
-          <Card align="center">
-            <CardHeader>
-              <Heading size="md"> Register </Heading>
-            </CardHeader>
-            <CardBody>
-              <Input
-                className="my-1"
-                variant="flushed"
-                placeholder="Enter Your name"
-                ref={name}
-              />
-              <Input
-                type="email"
-                className="my-1"
-                variant="flushed"
-                placeholder="Enter Your email"
-                ref={email}
-              />
-              <Input
-                type="password"
-                className="my-1"
-                variant="flushed"
-                placeholder="Enter Your Passscode"
-                ref={password}
-              />
-              <Input
-                type="password"
-                className="my-1"
-                variant="flushed"
-                placeholder="Confirm Passscode"
-                ref={confirmPassword}
-              />
-            </CardBody>
-            <CardFooter className="flex flex-col">
-              <Button
-                colorScheme="blue"
-                onClick={() =>
-                  handleSubmit({name:name.current.value, email:email.current.value,password:password.current.value,confirmPassword:confirmPassword.current.value})
-                }
-              >
-                Submit
-              </Button>
-              <Link to="https://chakra-ui.com" isExternal className="my-3">
-                <Text>
-                  forget your password ? <ExternalLinkIcon mx="2px" />
-                </Text>
-              </Link>
-            </CardFooter>
-          </Card>
-        </section>
-        <Button
-          rightIcon={<ArrowForwardIcon />}
-          colorScheme="teal"
-          variant="outline"
-          className="bckHome p-0 rounded-lg"
-          onClick={handleHomeBtn}
-        ></Button>
-      </div>
+      <InputGroup size="md">
+        <Input
+          pr="4.5rem"
+          type={show ? "text" : "password"}
+          placeholder={place}
+          onChange={(e) => set(e.target.value)}
+          value={pas}
+          className="my-1"
+          variant="flushed"
+        />
+        <InputRightElement width="4.5rem">
+          <Button h="1.75rem" size="sm" onClick={handleClick}>
+            {show ? "Hide" : "Show"}
+          </Button>
+        </InputRightElement>
+      </InputGroup>
     );
   };
-  
-  export default Register;
-  
+
+  return (
+    <div className="h-screen duration-300 ">
+      <section
+        className={`shadow-lg m-auto hover:text-red-100 transition-all duration-500 loginModule`}
+      >
+        <Card align="center">
+          <CardHeader>
+            <Heading size="lg" className="registerHead">
+              Register
+            </Heading>
+          </CardHeader>
+          <CardBody>
+            <Input
+              className="my-1 px-2"
+              variant="flushed"
+              placeholder="Enter Your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Input
+              type="email"
+              className="my-1 px-2"
+              variant="flushed"
+              placeholder="Enter Your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {PasswordInput(password, setPassword, "Enter Your Password")}
+            {PasswordInput(
+              confirmPassword,
+              setconfirmPassword,
+              "Confirm Password"
+            )}
+          </CardBody>
+          <CardFooter className="flex flex-col">
+            <Button
+              colorScheme="blue"
+              onClick={() =>
+                handleSubmit(name, email, password, confirmPassword)
+              }
+            >
+              Submit
+            </Button>
+          </CardFooter>
+        </Card>
+      </section>
+    </div>
+  );
+};
+
+export default Register;

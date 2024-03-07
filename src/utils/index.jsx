@@ -8,9 +8,9 @@ export const SuggestItems = [
   { name: "economy", color: "facebook", icon: <Icon as={SunIcon} /> },
 ];
 
-export const NavbarLinks = [
-  { name: "Home", path: "/" },
-  { name: "Posts", path: "/posts" },
+export const SideBarLinks = [
+  { name: "Home", path: "/", id: 1 },
+  { name: "Posts", path: "/posts", id: 2 },
 ];
 
 export const mainApiURL = "https://posts-api.preview-ym.com/api/";

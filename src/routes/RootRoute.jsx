@@ -10,7 +10,7 @@ export const RootRoute = {
       element: <Home />,
     },
     {
-      index: "posts",
+      path: "posts",
       element: <Posts />,
     },
   ],
