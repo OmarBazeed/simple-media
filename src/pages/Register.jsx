@@ -12,13 +12,13 @@ import {
 } from "@chakra-ui/react";
 
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Confetti from "react-confetti";
 
 const Register = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const toast = useToast();
 
   const [name, setName] = useState();
@@ -46,7 +46,7 @@ const Register = () => {
           width={window.innerWidth || 300}
           height={window.innerHeight || 200}
         />;
-        // navigate("/auth");
+        navigate("/auth");
       })
       .catch((err) => {
         Swal.fire({
