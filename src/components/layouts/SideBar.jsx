@@ -3,7 +3,7 @@ import { SideBarLinks } from "../../utils";
 
 const SideBar = () => {
   return (
-    <div>
+    <>
       <ul>
         {SideBarLinks.map((ele) => {
           return (
@@ -17,7 +17,7 @@ const SideBar = () => {
           );
         })}
       </ul>
-    </div>
+    </>
   );
 };
 

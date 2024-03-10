@@ -26,7 +26,6 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     const token = localStorage.getItem("token");
-    console.log(token.length);
     try {
       await axios.post(
         `${mainApiURL}auth/logout`,
@@ -46,11 +45,12 @@ const Navbar = () => {
         isClosable: true,
       });
       setIsClicked(true);
+
       setTimeout(() => {
         localStorage.clear();
         sessionStorage.clear();
         navigate("/");
-      }, 500);
+      }, 1000);
     } catch (error) {
       Swal.fire({
         icon: "error",

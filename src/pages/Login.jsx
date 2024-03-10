@@ -38,7 +38,6 @@ const Login = () => {
         .then((res) => {
           const user = res.data.user;
           const token = res.data.access_token;
-          console.log(token.length);
           localStorage.setItem("user", JSON.stringify(user));
           localStorage.setItem("token", token);
         });
@@ -47,7 +46,7 @@ const Login = () => {
         title: "Account Signed In",
         description: "You Have been signed in",
         status: "success",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
       });
       setIsClicked(true);

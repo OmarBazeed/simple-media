@@ -10,7 +10,7 @@ import {
   Box,
   CardFooter,
 } from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { mainApiURL } from "../utils/index";
 import { useCallback, useEffect, useState } from "react";
@@ -18,10 +18,12 @@ import Swal from "sweetalert2";
 import Image1 from "../assets/1.jpg";
 import UserDemo from "../assets/user.jpg";
 import moment from "moment";
+import { useToast } from "@chakra-ui/react";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const currentUser = JSON.parse(localStorage.getItem("user"));
+  const toast = useToast();
 
   const fetchingPosts = useCallback(async () => {
     try {
@@ -39,10 +41,47 @@ const Posts = () => {
   useEffect(() => {
     fetchingPosts();
   }, [fetchingPosts]);
+
+  const handleDeletePost = async (postId) => {
+    try {
+      await axios.delete(`${mainApiURL}post/delete/${postId}`);
+      toast({
+        title: "Account Signed In",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      alert(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+      });
+    }
+  };
+
+  const handleEditPost = async (postId) => {
+    try {
+      await axios.delete(`${mainApiURL}post/update/${postId}`, {});
+      toast({
+        title: "Account Signed In",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      alert(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response.data.message,
+      });
+    }
+  };
   return (
     <div className="my-4 flex flex-wrap items-center justify-between ">
       {posts?.map((post) => {
-        console.log(post);
         return (
           <div key={post.id} className="w-full">
             <Card
@@ -66,10 +105,30 @@ const Posts = () => {
                 </Stack>
                 <Stack>
                   {post?.user_id == currentUser?.id ? (
-                    <Button colorScheme="teal" variant="ghost">
-                      <EditIcon className="me-2" />
-                      Edit
-                    </Button>
+                    <>
+                      <div className="flex gap-2">
+                        <Button
+                          colorScheme="teal"
+                          variant="outline"
+                          onClick={() => {
+                            handleEditPost(post.id);
+                          }}
+                        >
+                          <EditIcon className="me-2" />
+                          Edit
+                        </Button>
+                        <Button
+                          colorScheme="red"
+                          variant="ghost"
+                          onClick={() => {
+                            handleDeletePost(post.id);
+                          }}
+                        >
+                          <DeleteIcon />
+                          Delete
+                        </Button>
+                      </div>
+                    </>
                   ) : (
                     ""
                   )}
