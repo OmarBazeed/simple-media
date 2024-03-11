@@ -49,7 +49,7 @@ const Navbar = () => {
       setTimeout(() => {
         localStorage.clear();
         sessionStorage.clear();
-        navigate("/");
+        navigate("/auth");
       }, 1000);
     } catch (error) {
       Swal.fire({

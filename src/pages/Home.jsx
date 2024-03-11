@@ -1,6 +1,7 @@
 import Posts from "./Posts";
 import SearchBar from "../components/SearchBar";
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import AddPostModal from "../common/AddPostModal";
 
 const Home = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -11,13 +12,7 @@ const Home = () => {
         <Box className="w-full me-2">
           <SearchBar />
         </Box>
-        {currentUser ? (
-          <Button colorScheme="" variant="outline">
-            + Add Post
-          </Button>
-        ) : (
-          ""
-        )}
+        {currentUser ? <AddPostModal /> : ""}
       </Box>
       <Posts />
     </>
