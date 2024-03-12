@@ -1,7 +1,7 @@
 import { Button, Image, Spinner } from "@chakra-ui/react";
 import Logo from "../../assets/logo.png";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   AvatarBadge,
@@ -38,11 +38,12 @@ const Navbar = () => {
       );
 
       toast({
-        title: "Account Signed In",
         description: "You Have signed out",
         status: "success",
-        duration: 9000,
+        duration: 1000,
         isClosable: true,
+        position: "top-right",
+        variant: "left-accent",
       });
       setIsClicked(true);
 
@@ -87,7 +88,9 @@ const Navbar = () => {
                   </MenuButton>
                   <MenuList>
                     <MenuGroup title="Profile">
-                      <MenuItem>My Account</MenuItem>
+                      <MenuItem>
+                        <Link to="/auth/user-profile">My Account</Link>
+                      </MenuItem>
                     </MenuGroup>
                     <MenuDivider />
                     <MenuGroup title="Help">

@@ -11,6 +11,7 @@ import {
   Input,
   FormLabel,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -22,6 +23,7 @@ const AddPostModal = () => {
   const [image, setImage] = useState("");
   const [caption, setCaption] = useState("");
   const [description, setDescription] = useState("");
+  const toast = useToast();
 
   const AddingNewPost = async () => {
     const token = localStorage.getItem("token");
@@ -41,7 +43,17 @@ const AddPostModal = () => {
         }
       );
       onClose();
+      // window.location.reload();
+      toast({
+        title: "New Post Created",
+        status: "warning",
+        isClosable: true,
+        position: "top",
+        variant: "left-accent",
+        duration: 1000,
+      });
     } catch (error) {
+      onClose();
       Swal.fire({
         icon: "error",
         title: "Oops...",

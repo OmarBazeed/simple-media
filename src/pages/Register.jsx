@@ -9,6 +9,7 @@ import {
   useToast,
   InputGroup,
   InputRightElement,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { useState } from "react";
@@ -20,7 +21,7 @@ import Confetti from "react-confetti";
 const Register = () => {
   const navigate = useNavigate();
   const toast = useToast();
-
+  const [celebrate, setCelebrate] = useState(false);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -36,17 +37,17 @@ const Register = () => {
       })
       .then((res) => {
         toast({
-          title: "Account Signed In",
           description: res.data.message,
           status: "success",
-          duration: 9000,
+          duration: 1000,
           isClosable: true,
+          position: "top-right",
+          variant: "left-accent",
         });
-        <Confetti
-          width={window.innerWidth || 300}
-          height={window.innerHeight || 200}
-        />;
-        navigate("/auth");
+        setCelebrate(true);
+        setTimeout(() => {
+          navigate("/auth");
+        }, 2500);
       })
       .catch((err) => {
         Swal.fire({
@@ -82,7 +83,10 @@ const Register = () => {
   };
 
   return (
-    <div className="h-screen duration-300 ">
+    <div className="h-screen duration-300 overflow-hidden ">
+      {celebrate && (
+        <Confetti width={window.innerWidth} height={window.innerHeight} />
+      )}
       <section
         className={`shadow-lg m-auto hover:text-red-100 transition-all duration-500 loginModule`}
       >
@@ -122,7 +126,17 @@ const Register = () => {
                 handleSubmit(name, email, password, confirmPassword)
               }
             >
-              Submit
+              {celebrate == true ? (
+                <Spinner
+                  thickness="1px"
+                  speed="0.5s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="md"
+                />
+              ) : (
+                "Submit"
+              )}
             </Button>
           </CardFooter>
         </Card>

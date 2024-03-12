@@ -86,7 +86,6 @@ const Posts = () => {
   return (
     <div className="my-4 flex flex-wrap items-center justify-between ">
       {posts?.map((post) => {
-        console.log(post);
         return (
           <div key={post.id} className="w-full">
             <Card

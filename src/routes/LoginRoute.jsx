@@ -1,9 +1,10 @@
 import LoginLayout from "../components/login/LoginLayout";
 import { Login } from "../pages";
+import Profile from "../pages/Profile";
 import Register from "../pages/Register";
 
 export const LoginRoute = {
-  path: "/auth",
+  path: "auth",
   element: <LoginLayout />,
   children: [
     {
@@ -13,6 +14,10 @@ export const LoginRoute = {
     {
       path: "register",
       element: <Register />,
+    },
+    {
+      path: "user-profile",
+      element: <Profile />,
     },
   ],
 };

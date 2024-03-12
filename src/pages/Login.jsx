@@ -43,11 +43,12 @@ const Login = () => {
         });
 
       toast({
-        title: "Account Signed In",
         description: "You Have been signed in",
         status: "success",
-        duration: 5000,
+        duration: 1000,
         isClosable: true,
+        position: "top-right",
+        variant: "left-accent",
       });
       setIsClicked(true);
       setTimeout(() => {

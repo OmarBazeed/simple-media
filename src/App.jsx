@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { RootRoute } from "./routes/RootRoute.jsx";
 
+import { RootRoute } from "./routes/RootRoute";
 import { LoginRoute } from "./routes/LoginRoute";
 
-const router = createBrowserRouter([RootRoute, LoginRoute, ]);
+const router = createBrowserRouter([RootRoute, LoginRoute]);
 
 const App = () => {
   return (
