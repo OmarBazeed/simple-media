@@ -50,9 +50,11 @@ const Posts = () => {
       await axios.delete(`${mainApiURL}post/delete/${postId}`);
       toast({
         title: "Post deleted successfully",
-        status: "success",
+        status: "error",
         duration: 5000,
         isClosable: true,
+        position: "top",
+        variant: "top-accent",
       });
       fetchingPosts();
     } catch (error) {

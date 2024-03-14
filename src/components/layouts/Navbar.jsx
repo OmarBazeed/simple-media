@@ -11,12 +11,13 @@ import {
   MenuList,
   MenuItem,
   MenuGroup,
-  MenuDivider,
   useToast,
 } from "@chakra-ui/react";
+import { RepeatIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { SearchBar } from "../";
 import { mainApiURL } from "../../utils";
 import Swal from "sweetalert2";
+import UpdateProfile from "../../common/UpdateProfile";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -87,14 +88,17 @@ const Navbar = () => {
                     </Avatar>
                   </MenuButton>
                   <MenuList>
-                    <MenuGroup title="Profile">
+                    <MenuGroup title="Profile" className="flex flex-col">
                       <MenuItem>
-                        <Link to="/auth/user-profile">My Account</Link>
+                        <Link to="/auth/user-profile">
+                          <InfoOutlineIcon className="me-3" color="blue.500" />
+                          My Account
+                        </Link>
                       </MenuItem>
-                    </MenuGroup>
-                    <MenuDivider />
-                    <MenuGroup title="Help">
-                      <MenuItem>Contact</MenuItem>
+                      <MenuItem>
+                        <RepeatIcon className="me-3" color="green.500" />
+                        <UpdateProfile />
+                      </MenuItem>
                     </MenuGroup>
                   </MenuList>
                 </Menu>
