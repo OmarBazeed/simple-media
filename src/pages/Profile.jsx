@@ -11,16 +11,12 @@ const Profile = () => {
 
   const FetchingUserData = async () => {
     try {
-      let res = await axios.get(
-        `${mainApiURL}auth/user-profile`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        }
-      );
+      let res = await axios.get(`${mainApiURL}auth/user-profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
       console.log(res);
       setUser(res.data);
     } catch (error) {
