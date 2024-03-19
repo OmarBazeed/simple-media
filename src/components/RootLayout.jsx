@@ -7,7 +7,7 @@ const RootLayout = () => {
       <Navbar />
 
       <div className="flex items-start gap-2 pe-2 ">
-        <div className="w-60 bg-[#3A724F] h-screen text-lg">
+        <div className="bg-[#062634] h-screen text-lg basis-36">
           <SideBar />
         </div>
         <div>

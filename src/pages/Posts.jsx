@@ -77,7 +77,6 @@ const Posts = () => {
         isClosable: true,
       });
     } catch (error) {
-      alert(error);
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -92,7 +91,7 @@ const Posts = () => {
           <div key={post.id} className="w-full">
             <Card
               maxW="3xl"
-              className="shadow-2xl m-auto shadow-blue-500/50 hover:shadow-slate-950  hover:shadow-md   transition-all duration-500 p-2 my-3"
+              className="shadow-2xl m-auto shadow-blue-500/50 hover:shadow-slate-950  hover:shadow-md transition-all duration-500 p-2 my-3"
             >
               <Box className="flex items-center gap-3 justify-between mb-2">
                 <Stack

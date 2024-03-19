@@ -10,6 +10,7 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 
 import { useState } from "react";
@@ -17,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Confetti from "react-confetti";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -138,6 +140,9 @@ const Register = () => {
                 "Submit"
               )}
             </Button>
+            <Link to="/auth" className=" capitalize mt-4">
+              <Text color="blue"> you have an account ? </Text>
+            </Link>
           </CardFooter>
         </Card>
       </section>
