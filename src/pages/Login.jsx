@@ -20,6 +20,8 @@ import {
 } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { mainApiURL } from "../utils";
+import { useAtom } from "jotai";
+import { user, userToken } from "../store/UserStore";
 
 const Login = () => {
   const toast = useToast();
@@ -27,6 +29,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
+  const [, setToken] = useAtom(userToken);
+  const [, setUserData] = useAtom(user);
 
   const handleSubmit = async () => {
     try {
@@ -36,10 +40,8 @@ const Login = () => {
           password: password,
         })
         .then((res) => {
-          const user = res.data.user;
-          const token = res.data.access_token;
-          localStorage.setItem("user", JSON.stringify(user));
-          localStorage.setItem("token", token);
+          setUserData(res.data.user);
+          setToken(res.data.access_token);
         });
 
       toast({

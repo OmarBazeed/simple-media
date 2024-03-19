@@ -18,15 +18,17 @@ import { SearchBar } from "../";
 import { mainApiURL } from "../../utils";
 import Swal from "sweetalert2";
 import UpdateProfile from "../../common/UpdateProfile";
+import { useAtomValue } from "jotai";
+import { user, userToken } from "../../store/UserStore";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const toast = useToast();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const userData = useAtomValue(user);
   const [isClicked, setIsClicked] = useState(false);
+  const token = useAtomValue(userToken);
 
   const handleLogout = async () => {
-    const token = localStorage.getItem("token");
     try {
       await axios.post(
         `${mainApiURL}auth/logout`,
@@ -71,7 +73,7 @@ const Navbar = () => {
           </div>
           <SearchBar />
           <div className="flex gap-2 items-center justify-between">
-            {user ? (
+            {Object.keys(userData).length != 0 ? (
               <>
                 <Menu>
                   <MenuButton
@@ -80,7 +82,7 @@ const Navbar = () => {
                     className="rounded-2xl"
                   >
                     <Avatar
-                      name={user?.name}
+                      name={userData?.name}
                       style={{ backgroundColor: "#C95D1C", color: "white" }}
                       className="h-full w-full hover:bg-slate-900"
                     >

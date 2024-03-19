@@ -4,14 +4,9 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
   Button,
   useDisclosure,
-  FormControl,
-  FormLabel,
-  Input,
-  Select,
   Text,
   Tabs,
   TabList,
@@ -21,12 +16,15 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { mainApiURL } from "../utils";
-import { useState } from "react";
 import MultiSelect from "./MultiSelect";
+import Swal from "sweetalert2";
+import { useAtom, useAtomValue } from "jotai";
+import { user, userToken } from "../store/UserStore";
+import UserInfo from "./UserInfo";
 
 const UpdateProfile = () => {
-  const token = localStorage.getItem("token");
-  const [currentUser, setcurrentUser] = useState({});
+  const token = useAtomValue(userToken);
+  const [, setcurrentUser] = useAtom(user);
 
   let fetchingUsreInfo = async () => {
     try {
@@ -38,7 +36,11 @@ const UpdateProfile = () => {
       setcurrentUser(res.data.data);
       onOpen();
     } catch (error) {
-      alert(error.response.data.message);
+      Swal.fire({
+        icon: "error",
+        title: "opps",
+        text: error.response.data.message,
+      });
       onClose();
     }
   };
@@ -61,6 +63,7 @@ const UpdateProfile = () => {
             Update Your Profile
           </ModalHeader>
           <ModalCloseButton />
+
           <Tabs variant="enclosed" className="">
             <TabList>
               <Tab>Data</Tab>
@@ -69,33 +72,7 @@ const UpdateProfile = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <ModalBody pb={6}>
-                  <FormControl>
-                    <FormLabel> First Name </FormLabel>
-                    <Input
-                      placeholder="First name"
-                      defaultValue={currentUser?.name}
-                      required
-                    />
-                  </FormControl>
-
-                  <FormControl mt={4}>
-                    <FormLabel>Email</FormLabel>
-                    <Input
-                      placeholder="Email"
-                      defaultValue={currentUser.email}
-                      required
-                    />
-                  </FormControl>
-
-                  <FormControl mt={4}>
-                    <FormLabel>Status</FormLabel>
-                    <Select placeholder="Select Status">
-                      <option value="Enable">Enable</option>
-                      <option value="Disable">Disable</option>
-                    </Select>
-                  </FormControl>
-                </ModalBody>
+                <UserInfo />
               </TabPanel>
               <TabPanel>
                 <MultiSelect />

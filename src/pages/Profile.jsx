@@ -1,37 +1,15 @@
-import { useEffect, useState } from "react";
-import { mainApiURL } from "../utils";
-import axios from "axios";
 import { Box, Text, Image, Skeleton } from "@chakra-ui/react";
 import BackImage from "../assets/background.jpg";
 import profile from "../assets/user.jpg";
-import Swal from "sweetalert2";
+import { useAtomValue } from "jotai";
+import { user } from "../store/UserStore";
 
 const Profile = () => {
-  const token = localStorage.getItem("token");
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    let fetchingUserData = async () => {
-      try {
-        let res = await axios.get(`${mainApiURL}auth/user-profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(res.data.data);
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: error.response.data.message,
-        });
-      }
-    };
-    fetchingUserData();
-  }, [token]);
+  const userData = useAtomValue(user);
 
   return (
     <>
-      {user ? (
+      {userData ? (
         <Box className="text-center mx-auto">
           <Image
             src={BackImage}
@@ -43,8 +21,8 @@ const Profile = () => {
             <Image src={profile} alt="..." className="rounded-full size-48" />
             <Text className="text-xl text-gray-900 font-bold">
               Name :
-              {user?.name ? (
-                <Text className="text-purple-500"> {user?.name}</Text>
+              {userData?.name ? (
+                <Text className="text-purple-500"> {userData?.name}</Text>
               ) : (
                 <Skeleton>
                   <div>It Will Not be visible</div>
@@ -53,8 +31,8 @@ const Profile = () => {
             </Text>
             <Text className="text-xl text-gray-900 font-bold">
               Email:
-              {user?.email ? (
-                <Text className="text-purple-500"> {user?.email} </Text>
+              {userData?.email ? (
+                <Text className="text-purple-500"> {userData?.email} </Text>
               ) : (
                 <Skeleton>
                   <div>It Will Not be visible</div>

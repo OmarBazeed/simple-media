@@ -17,6 +17,8 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { mainApiURL } from "../utils";
 import axios from "axios";
+import { userToken } from "../store/UserStore";
+import { useAtomValue } from "jotai";
 
 const AddPostModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,9 +26,9 @@ const AddPostModal = () => {
   const [caption, setCaption] = useState("");
   const [description, setDescription] = useState("");
   const toast = useToast();
+  const token = useAtomValue(userToken);
 
   const AddingNewPost = async () => {
-    const token = localStorage.getItem("token");
     try {
       await axios.post(
         `${mainApiURL}post/create`,
@@ -42,6 +44,7 @@ const AddPostModal = () => {
           },
         }
       );
+
       onClose();
       // window.location.reload();
       toast({

@@ -16,16 +16,19 @@ import {
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { mainApiURL } from "../utils/index";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import Swal from "sweetalert2";
 import Image1 from "../assets/1.jpg";
 import UserDemo from "../assets/user.jpg";
 import moment from "moment";
 import { useToast } from "@chakra-ui/react";
+import { user } from "../store/UserStore";
+import { useAtom, useAtomValue } from "jotai";
+import { PostsArray } from "../store/PostsStore";
 
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const currentUser = useAtomValue(user);
+  const [posts, setPosts] = useAtom(PostsArray);
   const toast = useToast();
 
   const fetchingPosts = useCallback(async () => {
@@ -39,10 +42,10 @@ const Posts = () => {
         text: error.response.data.message,
       });
     }
-  }, []);
+  }, [setPosts]);
 
   useEffect(() => {
-    fetchingPosts();
+    fetchingPosts(fetchingPosts);
   }, [fetchingPosts]);
 
   const handleDeletePost = async (postId) => {
