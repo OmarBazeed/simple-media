@@ -35,6 +35,7 @@ const Posts = () => {
     try {
       let res = await axios.get(`${mainApiURL}post/showAll`);
       setPosts(res.data.data);
+      console.log(res.data.data);
     } catch (error) {
       Swal.fire({
         icon: "error",

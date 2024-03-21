@@ -12,6 +12,8 @@ import {
   FormLabel,
   useDisclosure,
   useToast,
+  Box,
+  Image,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -22,11 +24,16 @@ import { useAtomValue } from "jotai";
 
 const AddPostModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
   const [caption, setCaption] = useState("");
   const [description, setDescription] = useState("");
   const toast = useToast();
   const token = useAtomValue(userToken);
+  const handleImages = async (e) => {
+    await setImages(e.target.files);
+
+    console.log(images);
+  };
 
   const AddingNewPost = async () => {
     try {
@@ -34,7 +41,7 @@ const AddPostModal = () => {
         `${mainApiURL}post/create`,
         {
           content: caption,
-          image: image,
+          image: images,
           description: description,
         },
         {
@@ -71,7 +78,6 @@ const AddPostModal = () => {
       </Button>
 
       <Modal
-        image={image}
         caption={caption}
         description={description}
         isOpen={isOpen}
@@ -89,28 +95,39 @@ const AddPostModal = () => {
                 type="file"
                 multiple
                 accept="image/*"
-                onChange={(e) => setImage(e.target.value)}
-              />
-            </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Caption</FormLabel>
-              <Input
-                placeholder="Enter A Caption"
-                onChange={(e) => setCaption(e.target.value)}
-              />
-            </FormControl>
-
-            <FormControl mt={4}>
-              <FormLabel>Description</FormLabel>
-              <Input
-                placeholder="Enter A Description"
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => handleImages(e)}
               />
             </FormControl>
           </ModalBody>
+          <Box>
+            {images.length > 0
+              ? images?.map((img) => {
+                  return (
+                    <>
+                      <Image src={img.name} alt="..." />
+                      <FormControl mt={4}>
+                        <FormLabel>Caption</FormLabel>
+                        <Input
+                          placeholder="Enter A Caption"
+                          onChange={(e) => setCaption(e.target.value)}
+                        />
+                      </FormControl>
+
+                      <FormControl mt={4}>
+                        <FormLabel>Description</FormLabel>
+                        <Input
+                          placeholder="Enter A Description"
+                          onChange={(e) => setDescription(e.target.value)}
+                        />
+                      </FormControl>
+                    </>
+                  );
+                })
+              : console.log("first")}
+          </Box>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => AddingNewPost()}>
+            <Button colorScheme="blue" mr={3} onClick={() => {}}>
               Add
             </Button>
             <Button onClick={onClose}>Cancel</Button>
