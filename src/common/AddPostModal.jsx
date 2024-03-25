@@ -3,7 +3,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Button,
@@ -26,14 +25,8 @@ const AddPostModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [images, setImages] = useState([]);
   const [caption, setCaption] = useState("");
-  const [description, setDescription] = useState("");
   const toast = useToast();
   const token = useAtomValue(userToken);
-  const handleImages = async (e) => {
-    await setImages(e.target.files);
-
-    console.log(images);
-  };
 
   const AddingNewPost = async () => {
     try {
@@ -42,7 +35,6 @@ const AddPostModal = () => {
         {
           content: caption,
           image: images,
-          description: description,
         },
         {
           headers: {
@@ -79,12 +71,12 @@ const AddPostModal = () => {
 
       <Modal
         caption={caption}
-        description={description}
         isOpen={isOpen}
         onClose={onClose}
+        className="modalSection"
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent className="p-3">
           <ModalHeader>Create your Post</ModalHeader>
           <ModalCloseButton />
 
@@ -95,43 +87,37 @@ const AddPostModal = () => {
                 type="file"
                 multiple
                 accept="image/*"
-                onChange={(e) => handleImages(e)}
+                onChange={(e) => {
+                  setImages([...e.target.files]);
+                  console.log([...e.target.files]);
+                }}
+                className="PicsInput"
               />
             </FormControl>
           </ModalBody>
-          <Box>
+          <Box className="flex gap-3 ">
             {images.length > 0
-              ? images?.map((img) => {
+              ? images.map((img) => {
                   return (
-                    <>
-                      <Image src={img.name} alt="..." />
-                      <FormControl mt={4}>
-                        <FormLabel>Caption</FormLabel>
+                    <Box className="flex flex-col m-auto" key={img.name}>
+                      <Image
+                        src={URL.createObjectURL(img)}
+                        alt="..."
+                        className="w-45 h-20 rounded-md"
+                      />
+                      <FormControl>
                         <Input
-                          placeholder="Enter A Caption"
-                          onChange={(e) => setCaption(e.target.value)}
+                          placeholder="Caption"
+                          onChange={(e) => {
+                            setCaption(e.target.value);
+                          }}
                         />
                       </FormControl>
-
-                      <FormControl mt={4}>
-                        <FormLabel>Description</FormLabel>
-                        <Input
-                          placeholder="Enter A Description"
-                          onChange={(e) => setDescription(e.target.value)}
-                        />
-                      </FormControl>
-                    </>
+                    </Box>
                   );
                 })
               : console.log("first")}
           </Box>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => {}}>
-              Add
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
