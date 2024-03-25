@@ -29,6 +29,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
+
   const [, setToken] = useAtom(userToken);
   const [, setUserData] = useAtom(user);
 
@@ -89,7 +90,7 @@ const Login = () => {
     );
   };
   return (
-    <div className="h-screen duration-300 ">
+    <div className="h-screen duration-300">
       <section
         className={`shadow-lg m-auto hover:text-red-100 transition-all duration-500 loginModule`}
       >
