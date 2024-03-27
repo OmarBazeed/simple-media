@@ -18,22 +18,22 @@ import axios from "axios";
 import { mainApiURL } from "../utils";
 import MultiSelect from "./MultiSelect";
 import Swal from "sweetalert2";
-import { useAtom, useAtomValue } from "jotai";
-import { user, userToken } from "../store/UserStore";
+import { useAtomValue } from "jotai";
+import { userToken } from "../store/UserStore";
 import UserInfo from "./UserInfo";
 
 const UpdateProfile = () => {
   const token = useAtomValue(userToken);
-  const [, setcurrentUser] = useAtom(user);
+  // const [, setcurrentUser] = useAtom(user);
 
   let fetchingUsreInfo = async () => {
     try {
-      let res = await axios.get(`${mainApiURL}auth/user-profile`, {
+      await axios.get(`${mainApiURL}auth/user-profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setcurrentUser(res.data.data);
+      // setcurrentUser(res.data.data);
       onOpen();
     } catch (error) {
       Swal.fire({
@@ -59,7 +59,7 @@ const UpdateProfile = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader className="text-center text-purple-950  shadow-md mb-3">
+          <ModalHeader className="text-center text-purple-900  shadow-md mb-3">
             Update Your Profile
           </ModalHeader>
           <ModalCloseButton />
