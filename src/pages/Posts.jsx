@@ -16,7 +16,7 @@ import {
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { mainApiURL } from "../utils/index";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import Swal from "sweetalert2";
 import Image1 from "../assets/1.jpg";
 import UserDemo from "../assets/user.jpg";
@@ -25,51 +25,20 @@ import { useToast } from "@chakra-ui/react";
 import { user } from "../store/UserStore";
 import { useAtom, useAtomValue } from "jotai";
 import { PostsArray } from "../store/PostsStore";
+import { DeletePostHook, GetPostsHook } from "../hooks/posts/GetPostsHook";
 
 const Posts = () => {
   const currentUser = useAtomValue(user);
   const [posts, setPosts] = useAtom(PostsArray);
   const toast = useToast();
 
-  const fetchingPosts = useCallback(async () => {
-    try {
-      let res = await axios.get(`${mainApiURL}post/showAll`);
-      setPosts(res.data.data);
-      console.log(res.data.data);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.response.data.message,
-      });
-    }
-  }, [setPosts]);
+  const { fetchingPosts } = GetPostsHook((posts) => setPosts(posts));
+
+  const { handleDeletePost } = DeletePostHook(() => fetchingPosts());
 
   useEffect(() => {
-    fetchingPosts(fetchingPosts);
+    fetchingPosts();
   }, [fetchingPosts]);
-
-  const handleDeletePost = async (postId) => {
-    try {
-      await axios.delete(`${mainApiURL}post/delete/${postId}`);
-      toast({
-        title: "Post deleted successfully",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-        variant: "top-accent",
-      });
-      fetchingPosts();
-    } catch (error) {
-      alert(error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.response.data.message,
-      });
-    }
-  };
 
   const handleEditPost = async (postId) => {
     try {
@@ -88,6 +57,7 @@ const Posts = () => {
       });
     }
   };
+
   return (
     <div className="my-4 flex flex-wrap items-center justify-between ">
       {posts?.map((post) => {
