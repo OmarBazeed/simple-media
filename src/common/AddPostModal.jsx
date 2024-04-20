@@ -14,6 +14,7 @@ import {
   Box,
   Image,
   Card,
+  Checkbox,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -27,6 +28,7 @@ const AddPostModal = () => {
   const [images, setImages] = useState([]);
   let [completedImgs] = useState([]);
   const [caption, setCaption] = useState("");
+  const [mainCaption, setMainCaption] = useState("");
   const toast = useToast();
   const token = useAtomValue(userToken);
   // const [clicked, setClicked] = useState(false);
@@ -50,7 +52,7 @@ const AddPostModal = () => {
         `${mainApiURL}post/create`,
         {
           content: caption,
-          image: images,
+          image: completedImgs,
         },
         {
           headers: {
@@ -111,16 +113,15 @@ const AddPostModal = () => {
               ? images.map((img, indx) => {
                   return (
                     <Card
-                      className="flex flex-col m-auto max-w-[160px]"
+                      className="flex flex-col m-auto max-w-[160px] shadow-none"
                       key={img.name}
                     >
-                      <Button
+                      <Checkbox
                         onClick={() => handleAdd(indx)}
                         variant="solid"
-                        colorScheme=""
-                      >
-                        Selected
-                      </Button>
+                        colorScheme="red"
+                        className="checkedBox my-2"
+                      ></Checkbox>
                       <Image
                         src={URL.createObjectURL(img)}
                         alt="..."
@@ -137,8 +138,28 @@ const AddPostModal = () => {
                 })
               : console.log("first")}
           </Box>
+          <Box className="my-4 mx-auto w-[90%] ">
+            <Input
+              type="text"
+              placeholder="Enter Caption"
+              onChange={(e) => setMainCaption(e.target.value)}
+              style={{ height: "150px" }}
+            />
+          </Box>
+          <Box className="flex items-center justify-center my-4">
+            <Button
+              variant="outline"
+              className={
+                !mainCaption
+                  ? "bg-orange-400 w-3/4 opacity-50 cursor-not-allowed"
+                  : "bg-orange-400 w-3/4"
+              }
+              onClick={() => AddingNewPost()}
+            >
+              Add
+            </Button>
+          </Box>
         </ModalContent>
-        <Box className="bg-slate-500"></Box>
       </Modal>
     </Box>
   );

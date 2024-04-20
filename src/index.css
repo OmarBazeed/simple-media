@@ -27,3 +27,7 @@
 .PicsInput {
   height: 200px !important;
 }
+.checkedBox span {
+  width: 25px !important;
+  height: 25px !important;
+}
