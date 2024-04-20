@@ -7,21 +7,18 @@ import {
   Heading,
   Input,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import {
-  useToast,
-  InputGroup,
-  InputRightElement,
-  Spinner,
-} from "@chakra-ui/react";
+import { InputGroup, InputRightElement, Spinner } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import { mainApiURL } from "../utils";
 import { useAtom } from "jotai";
 import { user, userToken } from "../store/UserStore";
+// import { UserLogin } from "../hooks/auth/UserAuthHook";
 
 const Login = () => {
   const toast = useToast();
@@ -65,6 +62,12 @@ const Login = () => {
       });
     }
   };
+
+  // const { handleSubmit } = UserLogin((user, token, clicked) => {
+  //   setToken(token);
+  //   setUserData(user);
+  //   setIsClicked(clicked);
+  // });
 
   const PasswordInput = () => {
     const [show, setShow] = useState(false);

@@ -14,7 +14,6 @@ import {
   Box,
   Image,
   Card,
-  Checkbox,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -30,7 +29,7 @@ const AddPostModal = () => {
   const [caption, setCaption] = useState("");
   const toast = useToast();
   const token = useAtomValue(userToken);
-  const [clicked, setClicked] = useState(false);
+  // const [clicked, setClicked] = useState(false);
 
   const handleAdd = (indx) => {
     let imgObj = { img: null, content: null };
@@ -41,7 +40,7 @@ const AddPostModal = () => {
       }
     });
     completedImgs.push(imgObj);
-    setClicked(true);
+    // setClicked(true);
     console.log(completedImgs);
   };
 
@@ -115,9 +114,13 @@ const AddPostModal = () => {
                       className="flex flex-col m-auto max-w-[160px]"
                       key={img.name}
                     >
-                      <Checkbox onClick={() => handleAdd(indx)} isDisabled>
-                        Checkbox
-                      </Checkbox>
+                      <Button
+                        onClick={() => handleAdd(indx)}
+                        variant="solid"
+                        colorScheme=""
+                      >
+                        Selected
+                      </Button>
                       <Image
                         src={URL.createObjectURL(img)}
                         alt="..."
