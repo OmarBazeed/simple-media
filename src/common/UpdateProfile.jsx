@@ -3,9 +3,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalCloseButton,
-  Button,
   useDisclosure,
   Text,
   Tabs,
@@ -82,13 +80,6 @@ const UpdateProfile = () => {
               </TabPanel>
             </TabPanels>
           </Tabs>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Send
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
