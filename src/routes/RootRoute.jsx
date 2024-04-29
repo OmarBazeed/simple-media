@@ -1,8 +1,8 @@
 import { Home, Posts } from "../pages/index.js";
-import RootLayout from "../components/RootLayout.jsx";
+import RootLayout from "../components/layouts/root/RootLayout.jsx";
 
 export const RootRoute = {
-  path: "/",
+  path: "/home",
   element: <RootLayout />,
   children: [
     {

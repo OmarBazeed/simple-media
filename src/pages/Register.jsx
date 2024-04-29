@@ -48,7 +48,7 @@ const Register = () => {
         });
         setCelebrate(true);
         setTimeout(() => {
-          navigate("/auth");
+          navigate("/");
         }, 2500);
       })
       .catch((err) => {
@@ -140,7 +140,7 @@ const Register = () => {
                 "Submit"
               )}
             </Button>
-            <Link to="/auth" className=" capitalize mt-4">
+            <Link to="/" className=" capitalize mt-4">
               <Text color="blue"> you have an account ? </Text>
             </Link>
           </CardFooter>

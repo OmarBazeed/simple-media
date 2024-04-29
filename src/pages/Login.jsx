@@ -32,15 +32,13 @@ const Login = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios
-        .post(`${mainApiURL}auth/login`, {
-          email: userName,
-          password: password,
-        })
-        .then((res) => {
-          setUserData(res.data.user);
-          setToken(res.data.access_token);
-        });
+      let res = await axios.post(`${mainApiURL}auth/login`, {
+        email: userName,
+        password: password,
+      });
+
+      setUserData(res.data.user);
+      setToken(res.data.access_token);
 
       toast({
         description: "You Have been signed in",
@@ -52,7 +50,9 @@ const Login = () => {
       });
       setIsClicked(true);
       setTimeout(() => {
-        navigate("/");
+        res.data.user.is_admin == 0
+          ? navigate("/home")
+          : navigate("/admindashboard");
       }, 1000);
     } catch (error) {
       Swal.fire({
@@ -62,12 +62,6 @@ const Login = () => {
       });
     }
   };
-
-  // const { handleSubmit } = UserLogin((user, token, clicked) => {
-  //   setToken(token);
-  //   setUserData(user);
-  //   setIsClicked(clicked);
-  // });
 
   const PasswordInput = () => {
     const [show, setShow] = useState(false);
@@ -135,7 +129,7 @@ const Login = () => {
               <Button
                 colorScheme="orange"
                 variant="link"
-                onClick={() => navigate("/auth/register")}
+                onClick={() => navigate("/register")}
                 className=""
                 size="md"
               >

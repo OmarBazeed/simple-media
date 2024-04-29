@@ -136,7 +136,7 @@ const AddPostModal = () => {
                     </Card>
                   );
                 })
-              : console.log("first")}
+              : ""}
           </Box>
           <Box className="my-4 mx-auto w-[90%] ">
             <Input

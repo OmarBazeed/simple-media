@@ -20,7 +20,7 @@ const UserInfo = () => {
   const currentUser = useAtomValue(user);
   const token = useAtomValue(userToken);
   const toast = useToast();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onClose } = useDisclosure();
 
   const [updatedName, setUpdatedName] = useState(currentUser?.name);
   const [updatedEmail, setUpdatedEmail] = useState(currentUser?.email);

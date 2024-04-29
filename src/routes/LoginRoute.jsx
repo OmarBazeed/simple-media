@@ -1,10 +1,11 @@
-import LoginLayout from "../components/login/LoginLayout";
+import AdminDashboard from "../Admin/components/AdminDashboard/AdminDashboard";
+import LoginLayout from "../components/layouts/login/LoginLayout";
 import { Login } from "../pages";
 import Profile from "../pages/Profile";
 import Register from "../pages/Register";
 
 export const LoginRoute = {
-  path: "auth",
+  path: "/",
   element: <LoginLayout />,
   children: [
     {
@@ -19,5 +20,6 @@ export const LoginRoute = {
       path: "user-profile",
       element: <Profile />,
     },
+    { path: "admindashboard", element: <AdminDashboard /> },
   ],
 };

@@ -9,8 +9,18 @@ export const SuggestItems = [
 ];
 
 export const SideBarLinks = [
-  { name: "Home", path: "/", id: 1 },
-  { name: "Posts", path: "/posts", id: 2 },
+  {
+    name: "Home",
+    path: "/home",
+    icon: <i className="fa-solid fa-house-chimney text-[#C05621]"></i>,
+    id: 1,
+  },
+  {
+    name: "Posts",
+    path: "/home/posts",
+    icon: <i className="fa-regular fa-copy text-[#C05621]"></i>,
+    id: 2,
+  },
 ];
 
 export const mainApiURL = "https://posts-api.preview-ym.com/api/";

@@ -1,4 +1,4 @@
-import { Navbar, Footer, SideBar } from "./index.js";
+import { Navbar, Footer, SideBar } from "../../index.js";
 import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
@@ -7,10 +7,10 @@ const RootLayout = () => {
       <Navbar />
 
       <div className="flex items-start gap-2 pe-2 ">
-        <div className="w-60 bg-slate-600 h-screen text-lg">
+        <div className="text-lg">
           <SideBar />
         </div>
-        <div>
+        <div className="w-100">
           <Outlet />
         </div>
       </div>

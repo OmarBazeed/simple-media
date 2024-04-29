@@ -1,25 +1,25 @@
-import { Button, Image, Spinner } from "@chakra-ui/react";
-import Logo from "../../assets/logo.png";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { InfoOutlineIcon, RepeatIcon } from "@chakra-ui/icons";
 import {
-  AvatarBadge,
   Avatar,
+  AvatarBadge,
+  Button,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
   MenuGroup,
+  MenuItem,
+  MenuList,
+  Spinner,
   useToast,
 } from "@chakra-ui/react";
-import { RepeatIcon, InfoOutlineIcon } from "@chakra-ui/icons";
-import { SearchBar } from "../";
-import { mainApiURL } from "../../utils";
-import Swal from "sweetalert2";
-import UpdateProfile from "../../common/UpdateProfile";
+import axios from "axios";
 import { useAtomValue } from "jotai";
-import { user, userToken } from "../../store/UserStore";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { SearchBar } from "../components";
+import UpdateProfile from "./UpdateProfile";
+import { user, userToken } from "../store/UserStore";
+import { mainApiURL } from "../utils";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ const Navbar = () => {
       setTimeout(() => {
         localStorage.clear();
         sessionStorage.clear();
-        navigate("/auth");
+        navigate("/");
       }, 1000);
     } catch (error) {
       Swal.fire({
@@ -68,7 +68,6 @@ const Navbar = () => {
       <nav className="flex items-center justify-between h-[64px] bg-slate-600 w-full px-5 ">
         <div className=" w-full px-3 flex items-center justify-between">
           <div className="flex gap-2 items-center">
-            <Image src={Logo} alt="..." className="size-11" />
             <h1 className="text-3xl font-bold text-white">Simple Media</h1>
           </div>
           <SearchBar />
@@ -92,7 +91,7 @@ const Navbar = () => {
                   <MenuList>
                     <MenuGroup title="Profile" className="flex flex-col">
                       <MenuItem>
-                        <Link to="/auth/user-profile">
+                        <Link to="/user-profile">
                           <InfoOutlineIcon className="me-3" color="blue.500" />
                           My Account
                         </Link>
