@@ -19,6 +19,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Confetti from "react-confetti";
 import { Link } from "react-router-dom";
+import { mainApiURL } from "../utils";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Register = () => {
 
   const handleSubmit = (name, email, password, confirmPassword) => {
     axios
-      .post("https://posts-api.preview-ym.com/api/auth/register", {
+      .post(`${mainApiURL}user/register`, {
         name: name,
         email: email,
         password: password,

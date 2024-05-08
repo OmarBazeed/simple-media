@@ -15,12 +15,14 @@ import { useState } from "react";
 import axios from "axios";
 import { InputGroup, InputRightElement, Spinner } from "@chakra-ui/react";
 import Swal from "sweetalert2";
-import { mainApiURL } from "../utils";
+
 import { useAtom } from "jotai";
-import { user, userToken } from "../store/UserStore";
+
+import { mainApiURL } from "../../../utils";
+import { user, userToken } from "../../../store/UserStore";
 // import { UserLogin } from "../hooks/auth/UserAuthHook";
 
-const Login = () => {
+const AdminLogin = () => {
   const toast = useToast();
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +34,7 @@ const Login = () => {
 
   const handleSubmit = async () => {
     try {
-      let res = await axios.post(`${mainApiURL}user/login`, {
+      let res = await axios.post(`${mainApiURL}admin/login`, {
         email: userName,
         password: password,
       });
@@ -50,9 +52,7 @@ const Login = () => {
       });
       setIsClicked(true);
       setTimeout(() => {
-        res.data.user.is_admin == 0
-          ? navigate("/home")
-          : navigate("/admindashboard");
+        navigate("/admin/dashboard");
       }, 1000);
     } catch (error) {
       Swal.fire({
@@ -94,7 +94,7 @@ const Login = () => {
         <Card align="center" className="w-[420px] h-[370px]">
           <CardHeader>
             <Heading size="lg" className="loginHead">
-              Login
+              Admin Login
             </Heading>
           </CardHeader>
           <CardBody>
@@ -143,4 +143,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;
